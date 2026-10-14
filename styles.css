@@ -1,0 +1,8 @@
+.junit-help {
+	color: var(--text-muted);
+}
+
+.junit-status {
+	white-space: pre-wrap;
+	color: var(--text-normal);
+}

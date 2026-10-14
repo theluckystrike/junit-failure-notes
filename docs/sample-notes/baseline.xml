@@ -1,0 +1,1 @@
+<testsuite><testcase classname="PaymentTest" name="checkout tax"><failure message="Tax mismatch"/></testcase><testcase classname="ReceiptTest" name="receipt total"><failure message="Total mismatch"/></testcase></testsuite>

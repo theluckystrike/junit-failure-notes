@@ -1,0 +1,73 @@
+[
+	{
+		"feature": "choose-file",
+		"caption": "Choose the checkout XML file in the vault.",
+		"note": "Start.md",
+		"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); p.choose('report'); const s = document.querySelector('.modal select'); s.value='JUnit Failure Notes/checkout.xml'; s.dispatchEvent(new Event('change')); return 'ok'; })()",
+		"wait": 1000,
+		"after": "(() => { const p=app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); return 'ok'; })()"
+	},
+	{
+		"feature": "counts",
+		"caption": "Four test cases counted from child status elements.",
+		"note": "Start.md",
+		"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); const f = await p.createReport('JUnit Failure Notes/checkout.xml', false, false); await app.workspace.getLeaf(false).setViewState({ type: 'markdown', state: {file: f.path, mode:'preview'} }); return 'ok'; })()",
+		"wait": 1000
+	},
+	{
+		"feature": "failure-logs",
+		"caption": "Literal assertion text and case output inside a folded callout.",
+		"note": "Start.md",
+		"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); const f = await p.createReport('JUnit Failure Notes/checkout.xml', false, false); await app.workspace.getLeaf(false).setViewState({ type: 'markdown', state: {file: f.path, mode:'preview'} }); await new Promise(r => setTimeout(r, 500)); document.querySelector('.workspace-leaf:not(.mod-hidden) .markdown-preview-view .callout[data-callout=\"failure\"] .callout-title')?.click(); document.querySelector('.markdown-preview-view .callout[data-callout=\"failure\"]')?.scrollIntoView({block:'start'}); return 'ok'; })()",
+		"wait": 1000
+	},
+	{
+		"feature": "count-warning",
+		"caption": "The actual count differs from the declared suite count.",
+		"note": "Start.md",
+		"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); const f = await p.createReport('JUnit Failure Notes/checkout.xml', false, false); await app.workspace.getLeaf(false).setViewState({ type: 'markdown', state: {file: f.path, mode:'preview'} }); return 'ok'; })()",
+		"wait": 1000
+	},
+	{
+		"feature": "source-link",
+		"caption": "A new report keeps its XML source and prior reports.",
+		"note": "Start.md",
+		"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); const f = await p.createReport('JUnit Failure Notes/checkout.xml', false, false); await app.workspace.getLeaf(false).setViewState({ type: 'markdown', state: {file: f.path, mode:'preview'} }); return 'ok'; })()",
+		"wait": 1000
+	},
+	{
+		"feature": "folder-reports",
+		"caption": "The folder run creates two reports and lists the malformed XML.",
+		"note": "Start.md",
+		"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.opts.http = async () => ({ status: 200, json: { data: { viewer: { login: 'demo-reader' }, user: { sponsorshipForViewerAsSponsor: { isActive: true, isOneTimePayment: false, tier: { name: '$5 a month', monthlyPriceInCents: 500 } } } } } }); app.secretStorage.setSecret('junit-failure-notes-github-token', 'gho_' + '0'.repeat(36)); await p.pro.refreshNow(); p.choose('folder'); const s=document.querySelector('.modal select'); s.value='JUnit Failure Notes'; s.dispatchEvent(new Event('change')); document.querySelector('.modal button.mod-cta').click(); await new Promise(r => setTimeout(r, 800)); return 'ok'; })()",
+		"wait": 1000,
+		"after": "(() => { const p=app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); return 'ok'; })()"
+	},
+	{
+		"feature": "baseline",
+		"caption": "The comparison lists added, resolved and retained failure names.",
+		"note": "Start.md",
+		"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.opts.http = async () => ({ status: 200, json: { data: { viewer: { login: 'demo-reader' }, user: { sponsorshipForViewerAsSponsor: { isActive: true, isOneTimePayment: false, tier: { name: '$5 a month', monthlyPriceInCents: 500 } } } } } }); app.secretStorage.setSecret('junit-failure-notes-github-token', 'gho_' + '0'.repeat(36)); await p.pro.refreshNow(); await p.saveBaseline('JUnit Failure Notes/baseline.xml'); const f = await p.createReport('JUnit Failure Notes/checkout.xml', true, false); await app.workspace.getLeaf(false).setViewState({ type: 'markdown', state: {file:f.path,mode:'preview'} }); await new Promise(r => setTimeout(r, 500)); document.querySelector('.markdown-preview-view h2[data-heading=\"Baseline comparison (Pro)\"]')?.scrollIntoView({block:'start'}); return 'ok'; })()",
+		"wait": 1000,
+		"after": "(() => { const p=app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); return 'ok'; })()"
+	},
+	{
+		"feature": "junit-failure-notes",
+		"caption": "Choose a local report, read the counts and open a failure log.",
+		"frames": [
+			{
+				"note": "Start.md",
+				"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); p.pro.signOut(); p.choose('report'); const select=document.querySelector('.modal select'); select.value='JUnit Failure Notes/checkout.xml'; select.dispatchEvent(new Event('change'));  return 'ok'; })()",
+				"hold": 1400
+			},
+			{
+				"eval": "(async () => { const p = app.plugins.plugins['junit-failure-notes']; for (const modal of [...p.dialogs]) modal.close(); document.querySelector('.modal-close-button')?.click(); const f = await p.createReport('JUnit Failure Notes/checkout.xml', false, false); await app.workspace.getLeaf(false).setViewState({ type: 'markdown', state: {file: f.path, mode:'preview'} }); return 'ok'; })()",
+				"hold": 1800
+			},
+			{
+				"eval": "document.querySelector('.workspace-leaf:not(.mod-hidden) .markdown-preview-view .callout[data-callout=\"failure\"] .callout-title')?.click(); document.querySelector('.markdown-preview-view .callout[data-callout=\"failure\"]')?.scrollIntoView({block:'start'}); 'ok'",
+				"hold": 2200
+			}
+		]
+	}
+]

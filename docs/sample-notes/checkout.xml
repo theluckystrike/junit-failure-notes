@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<testsuites name="Checkout checks" tests="99">
+ <testsuite name="Checkout">
+  <testcase classname="CartTest" name="adds a product"/>
+  <testcase classname="PaymentTest" name="checkout tax">
+   <failure message="Expected tax 12.00, got 10.00"><![CDATA[AssertionError: tax mismatch
+ at checkoutTax (payment.spec.ts:42)
+ expected: 12.00
+ received: 10.00
+Literal input: <cart total="100"> & tax
+Markdown stays text: ![receipt](receipt.png)
+Fence in output: ```]]></failure>
+   <system-out>Cart subtotal: 100.00
+Tax rule: standard
+Currency: USD</system-out>
+   <system-err>Assertion failed in PaymentTest</system-err>
+  </testcase>
+  <testsuite name="Inventory">
+   <testcase classname="InventoryTest" name="inventory read"><error message="Database unavailable">ConnectionError: refused
+ at inventoryRead (inventory.spec.ts:18)</error></testcase>
+   <testcase classname="BrowserTest" name="browser checkout"><skipped message="Browser fixture not enabled"/></testcase>
+  </testsuite>
+ </testsuite>
+</testsuites>
