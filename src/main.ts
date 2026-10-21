@@ -4,6 +4,8 @@ import { createGitHubSponsors } from './license/github-obsidian';
 import { SPONSORS, bindPro, isPro, resetPro } from './pro';
 import { JunitFailureNotesSettingTab, normalizeSettings, type JunitFailureNotesSettings } from './settings';
 import { MAX_BYTES, failedNames, nextReportPath, parseXml, renderReport, type Report } from './report';
+import { setupHello } from './hello/index';
+import WHATS_NEW from './whats-new.json';
 
 export default class JunitFailureNotesPlugin extends Plugin {
 	settings: JunitFailureNotesSettings = normalizeSettings(null);
@@ -14,6 +16,8 @@ export default class JunitFailureNotesPlugin extends Plugin {
 	private stopped = false;
 
 	async onload(): Promise<void> {
+		// First: "What's new" reads its state before the settings load (packages/hello). It does not wait.
+		setupHello(this, WHATS_NEW);
 		this.stopped = false;
 		await this.loadSettings();
 		if (this.stopped) return;

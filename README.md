@@ -68,6 +68,8 @@ To keep a history, create a new report after a test run. Existing notes keep the
 
 ## Settings
 
+After a minor or major update, this plugin opens one What's new tab in the background. The tab and settings card suggest other NoteMods plugins and Zovo Chat and link to notemods.com for feedback ([privacy](https://notemods.com/privacy/)). The tab sends no data. Turn the tab off in Settings.
+
 The settings tab shows the fixed limits and the saved baseline source. The limits are 2 MiB per XML file, 5,000 testcase elements and 20,000 characters per log. These limits cannot be changed in this version. Reports go beside their XML sources.
 
 The Pro section has the GitHub Sponsors sign-in controls. Free reports stay available when Pro is off. Baseline data stays saved when you sign out, but a comparison needs active Pro access.
