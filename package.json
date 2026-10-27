@@ -1,7 +1,6 @@
 {
 	"name": "junit-failure-notes",
-	"repository": {"type": "git", "url": "theluckystrike/junit-failure-notes.git"},
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"private": true,
 	"description": "Convert a local JUnit XML report into a note with test counts and folded failure logs.",
 	"main": "main.js",

@@ -1,7 +1,7 @@
 {
 	"id": "junit-failure-notes",
 	"name": "JUnit Failure Notes",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"minAppVersion": "1.13.4",
 	"description": "Convert a local JUnit XML report into a note with test counts and folded failure logs.",
 	"author": "Michael Lip",

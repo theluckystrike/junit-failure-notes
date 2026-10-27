@@ -1,5 +1,11 @@
 # junit-failure-notes
 
+## 1.1.1
+
+### Patch Changes
+
+- 39d39b4: Create folder reports, Save local baseline and Compare with local baseline now show how to get Pro, with a Sponsor on GitHub button. Nothing runs until Pro is on.
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,7 +1,7 @@
 import { Modal, Notice, Plugin, Setting, TFile, TFolder, normalizePath } from 'obsidian';
 import type { SponsorsManager } from './license/index';
 import { createGitHubSponsors } from './license/github-obsidian';
-import { SPONSORS, bindPro, isPro, resetPro } from './pro';
+import { PRO_LEADS, SPONSORS, bindPro, isPro, proNotice, resetPro, proText } from './pro';
 import { JunitFailureNotesSettingTab, normalizeSettings, type JunitFailureNotesSettings } from './settings';
 import { MAX_BYTES, failedNames, nextReportPath, parseXml, renderReport, type Report } from './report';
 import { setupHello } from './hello/index';
@@ -51,7 +51,7 @@ export default class JunitFailureNotesPlugin extends Plugin {
 		if (this.stopped) throw new Error('The plugin is not loaded.');
 	}
 	private requirePro(): void {
-		if (!isPro()) throw new Error('This is a pro feature. Sponsor on GitHub, then sign in from the plugin settings.');
+		if (!isPro()) throw new Error(proText('This is a pro feature.'));
 	}
 	async readReport(path: string): Promise<Report> {
 		const file = this.app.vault.getAbstractFileByPath(normalizePath(path));
@@ -109,7 +109,8 @@ export default class JunitFailureNotesPlugin extends Plugin {
 	choose(mode: 'report' | 'folder' | 'baseline' | 'compare'): void {
 		try {
 			this.requireLoaded();
-			if (mode !== 'report') this.requirePro();
+			// A free user who runs a Pro command gets the shared Pro notice. No window opens.
+			if (mode !== 'report' && !isPro()) { proNotice(PRO_LEADS[mode]); return; }
 			const files = this.app.vault.getFiles().filter((f) => f.extension.toLowerCase() === 'xml');
 			if (!files.length) throw new Error('No XML files found in the vault.');
 			const folders = new Set<string>(['']);
